@@ -11,5 +11,5 @@ This will help you understand the K8 Cluster creation, micro services developmen
  
  ## Details Documents
 
- - ![EKS Cluster Creation](./EKS_CREATTION.md)
- - ![Observability](./OBSERVABILITY.md)
+ - [EKS Cluster Creation](./EKS_CREATTION.md)
+ - [Observability](./OBSERVABILITY.md)
