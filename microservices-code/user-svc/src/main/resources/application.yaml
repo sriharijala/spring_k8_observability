@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /user
+
+spring:
+  application:
+    name: user-svc
+  config:
+    import: "configserver:http://localhost:8088"
+
+
+

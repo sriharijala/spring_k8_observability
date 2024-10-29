@@ -1,0 +1,19 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active:
+      - native
+
+logging:
+  level:
+    root: INFO
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+

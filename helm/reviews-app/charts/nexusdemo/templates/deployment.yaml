@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.microservice.name}}
+  namespace: {{.Values.microservice.namespace}}
+spec:
+  replicas: {{.Values.microservice.replicaCount}}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{.Values.microservice.name}}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{.Values.microservice.name}}
+    spec:
+      containers:
+      - name: {{.Values.microservice.name}}
+        image: {{.Values.microservice.image}}
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"        
+        ports:
+        - containerPort: {{.Values.microservice.containerPort}}

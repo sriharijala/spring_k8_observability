@@ -1,0 +1,27 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: reviews-app
+  labels:
+    name: reviews-app
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: monitoring
+  labels:
+    name: monitoring
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: tracing
+  labels:
+    name: tracing       
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "kafka"
+  labels:
+    name: "kafka"

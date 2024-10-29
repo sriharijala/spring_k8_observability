@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: {{.Values.microservice.namespace}}
+  #annotations:
+    #kubernetes.io/ingress.class: alb
+    #alb.ingress.kubernetes.io/load-balancer-name: apg2
+    #alb.ingress.kubernetes.io/target-type: ip
+    #nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/24,172.10.0.1,localhost,172.24.96.1, 172.24.107.240
+  labels:
+    app: ingress
+spec:
+  rules:
+    - host: userreviews.myservices.com
+      http:
+        paths:
+        - path: /reviews
+          pathType: Prefix
+          backend:
+            service:
+              name: {{.Values.microservice.userReviewsSvcName}}
+              port:
+                number: {{.Values.microservice.userReviewsSvcPort}}
+    - host: nexusdemo.myservices.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: {{.Values.microservice.nexusSvcName}}
+              port:
+                number: {{.Values.microservice.nexusSvcPort}}
+

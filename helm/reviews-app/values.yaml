@@ -1,0 +1,12 @@
+# Default values for user-reviews.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+microservice:
+  namespace: "reviews-app"
+  userReviewsSvcName: user-reviews
+  userReviewsSvcPort: 80
+  nexusSvcName: nexusdemo
+  nexusSvcPort: 80
+  DbSecrets: db-secrets
+  loki-server: loki
+

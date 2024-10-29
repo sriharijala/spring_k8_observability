@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.microservice.name}}
+  namespace: {{.Values.microservice.namespace}}
+  annotations:
+    prometheus.io/port: "metrics"
+    prometheus.io/scrape: "true"
+  labels:
+    app.kubernetes.io/part-of: dms  
+spec:
+  ports:
+    - port: {{.Values.microservice.servicePort}}
+      targetPort: {{.Values.microservice.containerPort}}
+      protocol: TCP
+      name: "metrics"
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: {{.Values.microservice.name}}

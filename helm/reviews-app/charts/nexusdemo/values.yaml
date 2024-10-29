@@ -1,0 +1,11 @@
+# Default values for user-reviews.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+microservice:
+  name: "nexusdemo"
+  environment : "dev"
+  containerPort: "80"
+  servicePort: "80"
+  replicaCount: 2
+  image: "nginxdemos/hello"
+  namespace: "reviews-app"
