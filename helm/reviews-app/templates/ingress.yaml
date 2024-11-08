@@ -1,35 +1,43 @@
+{{- if .Values.ingress.enabled -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
-  namespace: {{.Values.microservice.namespace}}
-  #annotations:
-    #kubernetes.io/ingress.class: alb
-    #alb.ingress.kubernetes.io/load-balancer-name: apg2
-    #alb.ingress.kubernetes.io/target-type: ip
-    #nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/24,172.10.0.1,localhost,172.24.96.1, 172.24.107.240
+  name: {{ include "reviews-app.fullname" . }}
   labels:
-    app: ingress
+    {{- include "reviews-app.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
   rules:
-    - host: userreviews.myservices.com
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-        - path: /reviews
-          pathType: Prefix
-          backend:
-            service:
-              name: {{.Values.microservice.userReviewsSvcName}}
-              port:
-                number: {{.Values.microservice.userReviewsSvcPort}}
-    - host: nexusdemo.myservices.com
-      http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: {{.Values.microservice.nexusSvcName}}
-              port:
-                number: {{.Values.microservice.nexusSvcPort}}
-
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- with .pathType }}
+            pathType: {{ . }}
+            {{- end }}
+            backend:
+              service:
+                name: {{ include "reviews-app.fullname" $ }}
+                port:
+                  number: {{ $.Values.service.port }}
+          {{- end }}
+    {{- end }}
+{{- end }}

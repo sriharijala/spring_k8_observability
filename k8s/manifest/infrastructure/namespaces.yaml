@@ -1,0 +1,14 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: reviews-app
+  labels:
+    name: reviews-app
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: reviews-app-infra
+  labels:
+    name: reviews-app
+

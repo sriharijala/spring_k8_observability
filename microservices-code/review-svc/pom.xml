@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
+		<dockerPassword></dockerPassword>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -72,11 +73,6 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
@@ -116,6 +112,22 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>sjala/${project.artifactId}</name>
+						<publish>true</publish>
+					</image>
+					<docker>
+						<publishRegistry>
+							<username>sjala</username>
+							<password>${dockerPassword}</password>
+						</publishRegistry>
+					</docker>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

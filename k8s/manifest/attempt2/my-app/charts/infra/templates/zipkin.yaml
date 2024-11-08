@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zipkin
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zipkin
+  template:
+    metadata:
+      labels:
+        app: zipkin
+    spec:
+      containers:
+      - name: zipkin
+        image: openzipkin/zipkin
+        ports:
+        - containerPort: 9411
+        env:
+           {{- toYaml .Values.global.db.details | nindent 10 }} 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipkin
+  namespace: {{ .Values.global.namespace }}
+spec:
+  type: NodePort
+  ports:
+  - port: 9411
+    targetPort: 9411
+    nodePort: 32000
+  selector:
+    app: zipkin

@@ -6,6 +6,6 @@ microservice:
   environment : "dev"
   containerPort: "80"
   servicePort: "80"
-  replicaCount: 2
+  replicaCount: 1
   image: "nginxdemos/hello"
   namespace: "reviews-app"

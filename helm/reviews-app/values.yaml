@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 microservice:
   namespace: "reviews-app"
-  userReviewsSvcName: user-reviews
+  userReviewsSvcName: nexusdemo
   userReviewsSvcPort: 80
   nexusSvcName: nexusdemo
   nexusSvcPort: 80

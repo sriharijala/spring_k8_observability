@@ -129,6 +129,7 @@ kubectl describe deployment
 kubectl describe pod
 kubectl logs
 kubectl get events
+kubectl config set-context --current --namespace=reviews-app
 ```
 
 

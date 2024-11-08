@@ -3,11 +3,33 @@ server:
   servlet:
     context-path: /review
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${REGISTRY-SVC:localhost}:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
 spring:
   application:
     name: review-svc
   config:
-    import: "configserver:http://localhost:8088"
-
-
-
+    import: optional:configserver:http://${CONFIG-SERVER:localhost}:8088
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://172.17.64.1:3306/socialmedia}
+    #SPRING_DATASOURCE_URL - jdbc:mysql://${DB_HOST}:${DB_PORT}/socialmedia
+    username: ${DB_USER:sjala}
+    password: ${DB_PASSWORD:JalaJala123}
+  sql:
+    init:
+      platform: mysql
+  #hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+  security:
+    user:
+      name: admin
+      password: admin
+  #automatically create/update tables
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

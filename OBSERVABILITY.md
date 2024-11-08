@@ -51,20 +51,23 @@
         3b. Span is each individual hop along the way, each request. 
             Spans may contain tags, or metadata, that can be used to later contextualize the request.
     
+## Architecture
+
+  ![K8 Observability Architecture](images/K8-Obervability-Architecture.png)
 
 ## Tools used in Observability
 
 1. *Tracing*
 
 - <a href="https://signoz.io/blog/distributed-tracing-tools/">Distributed tracing backend</a>
-    - e.g. Tempo, Jaeger, Zipkin, CloudWatch, DataDog
+    - e.g. Tempo, Jaeger, Zipkin, CloudWatch, DataDog, Dynatrace, Jaeger, SigNoz, Elastic APM
     - Fail safe to trace the request is send trace data from APP -> KAFKA -> Zipkin. That way if Zipkin is down at least the trace info is available in Kafka Queue.
     - <a href="https://phoenixnap.com/kb/kafka-on-kubernetes">Install Kafka with StatefulSet</a>
 
 2. *Logs collection*
 
 - <a href="https://www.tek-tools.com/apm/best-log-aggregator-tools">Log aggregation system</a>
-    - e.g. Loki, Fluentd, Logstash, CloudWatch, DataDog
+    - e.g. Loki, Fluentd, Logstash, CloudWatch, DataDog, Dynatrace, Serverless360
 
 
 3. *Metrics*
@@ -74,7 +77,20 @@
 - <a href="https://uptrace.dev/blog/grafana-alternatives.html">Data query, visualize, alerting platform</a>
     - e.g. Grafana, kibana... (see more alternatives)
 
-## Steps to log collection using Docker
+## Steps to add tracing
+
+1. Create Micro Services. 
+   
+   Refer to sample folder "microservices-code".
+
+2. Create infra structure
+
+   Change to docker folder and run
+   ```
+   docker compose --env-file=user-reviews.env up -d
+   ```
+
+## Steps to collect logs using Docker
 
 * Run Loki and Grafana on same network
 
@@ -225,9 +241,11 @@ Promtail Configuration: Double-check the promtail.yaml configuration, especially
 
   <img src="images/LogsCollectionFramework.png"/>
 
-* Install Promtail - In each container to collect logs and send it to Grafana Loki
-* Install Grafana Loki in central location - Where Grafana UI can collect data to view for end user
+* <a href="https://grafana.com/docs/loki/latest/send-data/promtail/installation/">Install Promtail</a> - As Daemon set to collect logs in from entire cluster and send it to Grafana Loki
+* Install Grafana Loki for log collection in central location - Where Grafana UI can collect data to view for end user
 * Install Grafana in central location
+* <a href="https://medium.com/@vinoji2005/install-prometheus-on-kubernetes-tutorial-and-example-6b3c800e7e1c">Install Prometheous for metric collection</a>
+   - Access Prometheus UI: http://localhost:9090/
 * Configure SpringBoot to log in mount volume where Promtail can read
 * Configure Promtail to read form same volume, and the end point of Grafana Loki
 * Test Loki ready status: http://localhost:3100/ready (Note : Not working in my case)
@@ -265,7 +283,7 @@ kubectl port-forward svc/prometheus-operator 8282:8080
 
 ---- trial
 minikube start
-minikune ip
+minikube ip
 
 Ref: https://medium.com/@brightband/deploying-prometheus-operator-to-a-kubernetes-cluster-c2378038c79b
 
@@ -292,19 +310,19 @@ kubectl get secret loki-grafana -n loki-stack -o jsonpath="{.data.admin-password
 decode password with https://www.base64decode.net/
 
 
---Get screts for Grfana
+--Get secrets for Grafana
 kubectl get secrets -n monitoring
 kubectl get secret  prometheus-grafana -o yaml -n monitoring
 
 --get CRD
 kubectl get crds
 --to see the  service selector
-kubectl get crd prometheuses.monitoring.coreos.com -o yaml > serviceMonitor.yaml
+kubectl get crd Prometheus monitoring.coreos.com -o yaml > serviceMonitor.yaml
 
 --point docker to minikube
 minikube docker-env
 
---get pods from specific namesapce
+--get pods from specific namespace
 kubectl get pods -n reviews-app
 
 --get containers in a pod

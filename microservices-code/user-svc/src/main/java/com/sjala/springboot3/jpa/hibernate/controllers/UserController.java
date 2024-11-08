@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.List;
 import java.util.Optional;
 
+import static java.rmi.server.LogStream.log;
+
 @Tag(name = "User", description = "User management APIs")
 @RestController
 @RequestMapping("/v1")
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -87,7 +91,6 @@ public class UserController {
 		}
 		else
 		{
-
 			List<Review> reviews =
 					Observation.createNotStarted("webclient.custom.operation", observationRegistry)
 					.observe(() ->
@@ -115,8 +118,8 @@ public class UserController {
 
 
     @Operation(
-	  	      summary = "Post a new review",
-	  	      description = "Customer can add new review.",
+	  	      summary = "Add new User",
+	  	      description = "Create new customer.",
 	  	      tags = { "User" })
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Customer.class), mediaType = "application/json") }),

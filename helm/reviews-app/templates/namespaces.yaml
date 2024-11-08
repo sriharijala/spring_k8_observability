@@ -24,4 +24,4 @@ kind: Namespace
 metadata:
   name: "kafka"
   labels:
-    name: "kafka"
+    name: "kafka"

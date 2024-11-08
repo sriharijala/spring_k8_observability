@@ -1,21 +1,22 @@
 spring:
   application:
-    name: registry-service
+    name: registry-svc
 
 server:
   port: 8761
 
 eureka:
-  instance:
-    hostname: localhost
   client:
     register-with-eureka: false
     fetch-registry: false
-    service-url:
-      default: http://${eureka.instance.hostname}:${server.port}
-
 
 management:
   tracing:
     sampling:
       probability: 1.0
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+

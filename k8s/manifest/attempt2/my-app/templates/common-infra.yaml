@@ -1,0 +1,7 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: reviews-app
+  namespace: {{.Values.global.namespace }}
+  labels:
+    name: reviews-app

@@ -7,6 +7,19 @@ spring:
   profiles:
     active:
       - native
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/sriharijala/config-server
+          clone-on-start: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${REGISTRY-SVC:localhost}:8761/eureka/
+  instance:
+    prefer-ip-address: true
 
 logging:
   level:
@@ -16,4 +29,8 @@ management:
   tracing:
     sampling:
       probability: 1.0
-
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true

@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -109,36 +110,12 @@ public class ReviewController {
 	{
 		 Span echoSpan = tracer.nextSpan().name("calling-controller-submitReview").start();
 
-		 Long customerId = review.getReviewerId();
-
 		 Optional<Review> postedReview = null;
 		 
 		 review.setPostDate(LocalDateTime.now());
 
-		 List<Customer> customers =
-				Observation.createNotStarted("webclient.custom.operation", observationRegistry)
-						.observe(() ->
-								webClient.get()
-										.uri("http://user-svc/user/v1/" + customerId)
-										.retrieve()
-										.bodyToMono(List.class)
-										.block()
-						);
+		 postedReview = postService.addReview(review);
 
-		 int count = customers.size();
-
-		 //customer exists
-		 if(count > 0)
-		 {
-			 review.setReviewerId(customerId);
-		 	 postedReview = postService.addReview(review);
-		 } 
-		 else 
-		 {
-			 echoSpan.end();
-			 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-		 }
-		
 		 echoSpan.end();
 		 
 		 if(postedReview == null)

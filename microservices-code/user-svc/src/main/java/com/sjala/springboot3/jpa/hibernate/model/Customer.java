@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,9 +37,9 @@ public class Customer {
     @Schema(description = "User email address", example = "Smith")
     private String email;
 
-    
     @Transient
     @Schema(accessMode = Schema.AccessMode.READ_ONLY,  description = "User reviews list")
+    @JsonInclude(JsonInclude.Include.NON_ABSENT)
     private List<Review> reviews;
 
 }

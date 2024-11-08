@@ -8,8 +8,6 @@ data:
   DB_HOST: "172.24.96.1"
   DB_PORT: "3306"
   DB_DATABASE: "socialmedia"
-  #DB_USER: "sjala"
-  #DB_PASSWORD: "JalaJala123"
   APP_CONFIG_DIR: "/usr/app"
   SPRING_DATASOURCE_URL: "jdbc:mysql://172.24.96.1:3306/socialmedia"
 ---
@@ -17,7 +15,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: promtail-config
-  namespace: {{.Values.microservice.namespace}}
+  namespace: {{.Values.global.namespace}}
 data:
   promtail.yaml: |
     server:

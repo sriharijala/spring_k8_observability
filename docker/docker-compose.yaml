@@ -1,0 +1,37 @@
+name: k8-observability
+
+services:  
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - mysql-data:/usr/app
+    environment: 
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+       - "33061:33061"
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+volumes:
+  mysql-data:
+    external: false
+networks:
+  default:
+    driver: bridge
+    name: user-reviews      
