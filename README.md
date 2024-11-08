@@ -22,8 +22,10 @@ This document provides guidance on creating a Kubernetes cluster, developing and
   ## Approach
 
   - Terraform use to create K8 Cluster
-  - Git Workflow to prepared build and deployments
+  - Git Workflow to prepare build and deployments
   - Helm Charts to deploy the build through Git workflow
+  - JPA to store data in MySQL
+  - Monitoring using open source components.
 
   ## Overview
 
@@ -51,7 +53,7 @@ This document provides guidance on creating a Kubernetes cluster, developing and
         Consistency Across Services
 
   - Registry Service using NetFlex
-  
+
         Service Discovery
         Dynamic Load Balancing
         Failover and Resilience
