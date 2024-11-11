@@ -3,7 +3,9 @@ package com.sjala.springboot3.jpa.hibernate.controllers;
 import com.sjala.springboot3.jpa.hibernate.model.Customer;
 import com.sjala.springboot3.jpa.hibernate.model.Review;
 import com.sjala.springboot3.jpa.hibernate.services.UserService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.tracing.Span;
@@ -75,8 +77,8 @@ public class UserController {
       @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Customer.class), mediaType = "application/json") }),
       @ApiResponse(responseCode = "204", description = "No users found", content = { @Content(schema = @Schema()) })
     })
-	//@CircuitBreaker(name = "getUserById", fallbackMethod = "getUserById")
-	//@Retry(name = "getUserById")
+	@CircuitBreaker(name = "getUserById", fallbackMethod = "getUserById")
+	@Retry(name = "getUserById")
 	@RateLimiter(name = "getUserById")
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Customer>> getUserById(@PathVariable Long id) {
