@@ -3,12 +3,12 @@ package com.sjala.springboot3.jpa.hibernate.controllers;
 import com.sjala.springboot3.jpa.hibernate.model.Customer;
 import com.sjala.springboot3.jpa.hibernate.model.Review;
 import com.sjala.springboot3.jpa.hibernate.services.UserService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -25,8 +25,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.Optional;
-
-import static java.rmi.server.LogStream.log;
 
 @Tag(name = "User", description = "User management APIs")
 @RestController
@@ -77,6 +75,9 @@ public class UserController {
       @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Customer.class), mediaType = "application/json") }),
       @ApiResponse(responseCode = "204", description = "No users found", content = { @Content(schema = @Schema()) })
     })
+	//@CircuitBreaker(name = "getUserById", fallbackMethod = "getUserById")
+	//@Retry(name = "getUserById")
+	@RateLimiter(name = "getUserById")
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Customer>> getUserById(@PathVariable Long id) {
     	
@@ -115,7 +116,10 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-
+    public ResponseEntity<Optional<Customer>> getUserById(Exception ex) {
+		log.error("Issue in accessing review-svc! Please retry");
+		return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
     @Operation(
 	  	      summary = "Add new User",
