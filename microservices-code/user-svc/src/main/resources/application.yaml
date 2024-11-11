@@ -34,3 +34,29 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+resilience4j:
+  circuitBreaker:
+    instances:
+      getUserById:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+  retry:
+    instances:
+      getUserById:
+        maxAttempts: 5
+        waitDuration: 10s
+  rateLimiter:
+    instances:
+      getUserById:
+        registerHealthIndicator: false
+        limitForPeriod: 10
+        limitRefreshPeriod: 10s
+        timeoutDuration: 3s
