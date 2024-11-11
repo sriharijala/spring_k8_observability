@@ -26,11 +26,14 @@ This document provides guidance on creating a Kubernetes cluster, developing and
   - Helm Charts to deploy the build through Git workflow
   - JPA to store data in MySQL
   - Monitoring using open source components.
+  - Create tests using consumer driven contracts (CDC) in groovy language
 
   ## Overview
 
   * Micro Services
-      Couple of Micro Services (User, Review) provides CRUDs operations and interact with each other to show traceability.
+      
+      - Couple of Micro Services (User, Review) provides CRUDs operations and interact with each other to show traceability.
+      - User Service calls Review Service using Circuit Breaker, and Retry.
 
   * API Gateway
 

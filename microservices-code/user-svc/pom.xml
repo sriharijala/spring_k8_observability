@@ -166,6 +166,14 @@
 					<baseClassForTests>com.sjala.micro.services.user.reviews.cdc.ConsumerDrivenTestingBase</baseClassForTests>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>7</source>
+					<target>7</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
