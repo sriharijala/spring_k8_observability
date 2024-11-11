@@ -1,4 +1,4 @@
-package com.sjala.micro.services.user_reviews;
+package com.sjala.micro.services.user.reviews;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -31,6 +31,8 @@
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
 		<!-- Pass docker password through the command line parameters -->
 		<dockerPassword></dockerPassword>
+		<!-- Consumer Driven Contract Testing-->
+		<spring-cloud-contract.version>3.0.3</spring-cloud-contract.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -105,6 +107,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
 		</dependency>
+		<!-- Consumer Driven Contarct testing -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-contract-verifier</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -146,6 +154,16 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+				<version>${spring-cloud-contract.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<testFramework>JUNIT5</testFramework>
+					<baseClassForTests>com.sjala.micro.services.user.reviews.cdc.ConsumerDrivenTestingBase</baseClassForTests>
 				</configuration>
 			</plugin>
 		</plugins>
