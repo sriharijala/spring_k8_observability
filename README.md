@@ -13,7 +13,7 @@ This document provides guidance on creating a Kubernetes cluster, developing and
  ## Details Documents
 
  - [EKS Cluster Creation](./EKS_CREATTION.md)
- - [Observability](./OBSERVABILITY.md)
+ - [K8S Observability](./OBSERVABILITY.md)
 
  ## Overall Architecture
 
