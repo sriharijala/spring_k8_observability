@@ -1,4 +1,4 @@
-# K8 and Observability
+# K8S Observability
 
 This document provides guidance on creating a Kubernetes cluster, developing and deploying microservices, and implementing observability using relevant tools. Since each area is extensive, they are documented separately in individual README files, each linked to this main document for easy navigation.
 
