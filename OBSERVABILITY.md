@@ -251,7 +251,25 @@ Promtail Configuration: Double-check the promtail.yaml configuration, especially
 * Test Loki ready status: http://localhost:3100/ready (Note : Not working in my case)
 * Test Loki metrics: http://localhost:3100/metrics
 
+## Grafana sample screens
 
+* Instance Metrics
+
+ <img src="images/GrafanaSpringServicesMonitoring.png"/>
+
+ * Compute Workloads
+
+ <img src="images/GrafanaUserreviews.png"/>
+
+## Zipkin sample screens
+
+* Trace details 
+
+ <img src="images/ZipkinTrace.png"/>
+
+ * Microservice Dependencies 
+
+ <img src="images/ZipkinDependencies.png"/>
 
 ## Steps To Deploy in EKS:
 
