@@ -55,7 +55,7 @@ This document provides guidance on creating a Kubernetes cluster, developing and
         Version Control for Configurations
         Consistency Across Services
 
-  - Registry Service using NetFlex
+  - Registry Service using Netflix
 
         Service Discovery
         Dynamic Load Balancing
