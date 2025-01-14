@@ -19,7 +19,7 @@
 
 * Kustomize installation
   - # pull the image
-    ```docker pull registry.k8s.io/kustomize/kustomize:v5.0.0``
+    ```docker pull registry.k8s.io/kustomize/kustomize:v5.0.0```
 
 # run 'kustomize version'
     ```docker run registry.k8s.io/kustomize/kustomize:v5.0.0 version```   
