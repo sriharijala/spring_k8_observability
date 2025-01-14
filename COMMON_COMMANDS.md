@@ -10,7 +10,7 @@
     NAME           CLASS   HOSTS                 ADDRESS        PORTS   AGE
     myapp-my-app   nginx   minikube.mshome.net   192.168.49.2   80      74s
     ```
-  - Add Ingress Controller in minikube: ```minikube addons enable ingress```
+
 
 * Kubernetes
   - Cluster info : ```kubectl cluster-info```
